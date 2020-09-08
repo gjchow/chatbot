@@ -10,7 +10,7 @@ lemmatizer = WordNetLemmatizer()
 
 model = load_model('chatbot_model.h5')
 
-ERROR_THRESHOLD = 0.25
+ERROR_THRESHOLD = 0.1
 # open things to be read
 intents = json.loads(open('intents.json').read())
 words_ = pickle.load(open('words.pkl', 'rb'))
@@ -43,16 +43,22 @@ def predict_class(sentence, model_):
     res = model_.predict(np.array([p]))[0]
     results = []
     for i, r in enumerate(res):
-        if r > ERROR_THRESHOLD:
+        print(classes[i], r)
+        if r > 1-ERROR_THRESHOLD:
             results.append([i, r])
     results.sort(key=lambda x: x[1], reverse=True)
     return_list = []
-    for r in results:
-        return_list.append({'intent': classes[r[0]], 'probability': str(r[1])})
+    if len(results) == 0:
+        return_list.append({'intent': 'unknown', 'probability': '1'})
+    else:
+        for r in results:
+            return_list.append({'intent': classes[r[0]], 'probability': str(r[1])})
+    print(return_list)
     return return_list
 
 
 # outputs the response from the intent with the highest probability
+# change this to get different responses depending on tag
 def get_response(ints, intents_json):
     tag = ints[0]['intent']
     list_of_intents = intents_json['intents']
@@ -69,4 +75,4 @@ def chatbot_response(msg):
     return res
 
 
-print(predict_class("", model))
+print(chatbot_response("what is csc148"))

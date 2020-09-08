@@ -23,7 +23,36 @@
          "patterns": [],
          "responses": ["Sorry, I don't understand."],
          "context_set": ""
+        },
+        {"tag": "search",
+         "patterns": ["csc000", "what is csc000", "course csc000", "which course is csc000"],
+         "responses": ["Searching for something"],
+         "context_set": ""
+        },
+        {"tag": "prereq",
+         "patterns": ["prerequisites for csc000", "what do you need for csc000", "prerequisites csc000", "what is needed for csc000"],
+         "responses": ["Some prerequisite"],
+         "context_set": ""
+        },
+        {"tag": "description",
+         "patterns": ["what is csc000 about", "what do you learn in csc000", "is csc000 interesting"],
+         "responses": ["Description"],
+         "context_set": ""
+        },
+        {"tag": "exclusion",
+         "patterns": ["exclusion for csc000", "what are the exclusions for csc000", "what can you take besides csc000", "alaternatives to csc000"],
+         "responses": ["Exclusion"],
+         "context_set": ""
+        },
+        {"tag": "breadth",
+         "patterns": ["breadth of csc000", "which breadth requirement is csc000", "csc000 breadth", "which category is csc000 in"],
+         "responses": ["Breadth Category"],
+         "context_set": ""
+        },
+        {"tag": "link",
+         "patterns": ["link me csc000", "csc000 link", "csc000 website", "more info on csc000"],
+         "responses": ["Here is the link"],
+         "context_set": ""
         }
-
-   ]
+]
 }
