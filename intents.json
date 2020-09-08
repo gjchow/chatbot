@@ -5,19 +5,25 @@
          "context_set": ""
         },
         {"tag": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye", "I am leaving", "Have a good day"],
+         "patterns": ["Bye", "See you later", "Goodbye", "Have a good day"],
          "responses": ["Have a nice day!", "Goodbye!"],
          "context_set": ""
         },
         {"tag": "thanks",
-         "patterns": ["Thank you", "how old is tim", "what is your age", "how old are you", "age?"],
-         "responses": ["I am 18 years old!", "18 years young!"],
+         "patterns": ["Thank you", "Thanks", "Thanks for the help", "Great, thanks"],
+         "responses": ["No problem!", "That's what I'm here for."],
          "context_set": ""
         },
         {"tag": "help",
          "patterns": ["What can you do", "Help"],
          "responses": ["I can do many things."],
          "context_set": ""
+        },
+        {"tag": "unknown",
+         "patterns": [],
+         "responses": ["Sorry, I don't understand."],
+         "context_set": ""
         }
+
    ]
 }
