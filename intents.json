@@ -15,8 +15,8 @@
          "context_set": ""
         },
         {"tag": "help",
-         "patterns": ["What can you do", "Help"],
-         "responses": ["I can do many things."],
+         "patterns": ["what can you do", "help", "what are you", "what is this"],
+         "responses": ["I am a bot that can give you information on courses."],
          "context_set": ""
         },
         {"tag": "unknown",
@@ -25,7 +25,7 @@
          "context_set": ""
         },
         {"tag": "search",
-         "patterns": ["csc000", "what is csc000", "course csc000", "which course is csc000"],
+         "patterns": ["csc000", "what is csc000", "course csc000", "which course is csc000", "what is mat000", "what is sta000"],
          "responses": ["Searching for something"],
          "context_set": ""
         },

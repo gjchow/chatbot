@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 def scrape(course):
     out = []
+    course = course.lower()
     utsg = re.compile(r'^\w{3}\d{3}$')
     utsc = re.compile(r'^\w{3}[A-Da-d]\d{2}$')
     is_utsg = re.match(utsg, course)
@@ -16,7 +17,7 @@ def scrape(course):
         urly = "https://utsc.calendar.utoronto.ca/course/" + course + "y3"
         urlh = "https://utsc.calendar.utoronto.ca/course/" + course + "h3"
     else:
-        out.append(f'Not a valid course: {course}')
+        out.append('Not a valid course')
         return out
     pagey = requests.get(urly)
     pageh = requests.get(urlh)

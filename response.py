@@ -5,12 +5,14 @@ import json
 import random
 import pickle
 import numpy as np
+import scraper
+import re
 
 lemmatizer = WordNetLemmatizer()
 
 model = load_model('chatbot_model.h5')
 
-ERROR_THRESHOLD = 0.1
+ERROR_THRESHOLD = 0.2
 # open things to be read
 intents = json.loads(open('intents.json').read())
 words_ = pickle.load(open('words.pkl', 'rb'))
@@ -59,20 +61,57 @@ def predict_class(sentence, model_):
 
 # outputs the response from the intent with the highest probability
 # change this to get different responses depending on tag
-def get_response(ints, intents_json):
+def get_response(ints, intents_json, sentence):
+    result = ''
+    text_response = ['greeting', 'goodbye', 'help', 'thanks', 'unknown']
     tag = ints[0]['intent']
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
         if i['tag'] == tag:
-            result = random.choice(i['responses'])
+            if tag in text_response:
+                result = random.choice(i['responses'])
+            else:
+                course = get_course(sentence)
+                if tag == 'search':
+                    result = scraper.course_info(course)
+                elif tag == 'prereq':
+                    result = scraper.course_prereq(course)
+                elif tag == 'breadth':
+                    result = scraper.course_breadth(course)
+                elif tag == 'description':
+                    result = scraper.course_descrip(course)
+                elif tag == 'exclusion':
+                    result = scraper.course_exclu(course)
+                elif tag == 'link':
+                    result = scraper.course_link(course)
             return result
+
+
+def get_course(sentence):
+    words = list(sentence.split())
+    is_utsg = False
+    is_utsc = False
+    utsg = re.compile(r'^\w{3}\d{3}$')
+    utsc = re.compile(r'^\w{3}[A-Da-d]\d{2}$')
+    for word in words:
+        if not is_utsg and not is_utsc:
+            is_utsg = re.match(utsg, word)
+            if is_utsg:
+                return word
+            is_utsc = re.match(utsc, word)
+            if is_utsc:
+                return word
+    return ''
 
 
 # takes in the message and outputs a response after predicting intent
 def chatbot_response(msg):
     ints = predict_class(msg, model)
-    res = get_response(ints, intents)
+    res = get_response(ints, intents, msg)
     return res
 
 
-print(chatbot_response("what is csc148"))
+message = ''
+while message != 'q':
+    message = input()
+    print(chatbot_response(message))
