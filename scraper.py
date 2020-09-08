@@ -143,6 +143,3 @@ def course_link(course):
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
     return [scrape(course)[5]]
-
-
-print(scrape('mat137'))

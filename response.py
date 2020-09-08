@@ -10,13 +10,13 @@ import re
 
 lemmatizer = WordNetLemmatizer()
 
-model = load_model('chatbot_model.h5')
+model = load_model('training_info/chatbot_model.h5')
 
 ERROR_THRESHOLD = 0.2
 # open things to be read
 intents = json.loads(open('intents.json').read())
-words_ = pickle.load(open('words.pkl', 'rb'))
-classes = pickle.load(open('classes.pkl', 'rb'))
+words_ = pickle.load(open('training_info/words.pkl', 'rb'))
+classes = pickle.load(open('training_info/classes.pkl', 'rb'))
 
 
 # lemmatize and clean up the words in a sentence
@@ -109,5 +109,3 @@ def chatbot_response(msg):
     ints = predict_class(msg, model, show_details=False)
     res = get_response(ints, intents, msg)
     return res
-
-chatbot_response('what is mat137')
