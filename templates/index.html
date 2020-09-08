@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+</head>
+<body>
+    {{ message }}<br><br>
+    <b>Bot:</b>
+    <text>{% for res in response %}
+            {{res}}<br><br>
+    {% endfor %}</text>
+    <form action="" method="post">
+        <div class="main">
+            <input type="text" id="msg" name="msg" placeholder="Type a message">
+            <button type="submit" class="submit" id="submit">Send</button>
+        </div>
+    </form>
+</body>
+</html>

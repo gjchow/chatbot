@@ -40,12 +40,13 @@ def bow(sentence, words, show_details=True):
 
 
 # shows the intents and the likelihood
-def predict_class(sentence, model_):
+def predict_class(sentence, model_, show_details=True):
     p = bow(sentence, words_, show_details=False)
     res = model_.predict(np.array([p]))[0]
     results = []
     for i, r in enumerate(res):
-        print(classes[i], r)
+        if show_details:
+            print(classes[i], r)
         if r > 1-ERROR_THRESHOLD:
             results.append([i, r])
     results.sort(key=lambda x: x[1], reverse=True)
@@ -55,7 +56,6 @@ def predict_class(sentence, model_):
     else:
         for r in results:
             return_list.append({'intent': classes[r[0]], 'probability': str(r[1])})
-    print(return_list)
     return return_list
 
 
@@ -69,7 +69,7 @@ def get_response(ints, intents_json, sentence):
     for i in list_of_intents:
         if i['tag'] == tag:
             if tag in text_response:
-                result = random.choice(i['responses'])
+                result = [random.choice(i['responses'])]
             else:
                 course = get_course(sentence)
                 if tag == 'search':
@@ -106,12 +106,8 @@ def get_course(sentence):
 
 # takes in the message and outputs a response after predicting intent
 def chatbot_response(msg):
-    ints = predict_class(msg, model)
+    ints = predict_class(msg, model, show_details=False)
     res = get_response(ints, intents, msg)
     return res
 
-
-message = ''
-while message != 'q':
-    message = input()
-    print(chatbot_response(message))
+chatbot_response('what is mat137')

@@ -27,21 +27,21 @@ def scrape(course):
 
     namey = soupy.find(id='page-title')
     nameh = souph.find(id='page-title')
-    if nameh.text.strip() != "Sorry, this course is not in the current Calendar." or \
-            namey.text.strip() != "Sorry, this course has been retired and is no longer offered.":
-        out.append(nameh.text.strip())
+    namey = namey.text.strip()
+    nameh = nameh.text.strip()
+    if nameh != "Sorry, this course is not in the current Calendar." and \
+            nameh != "Sorry, this course has been retired and is no longer offered.":
+        out.append(nameh)
         link = urlh
         info = souph.find_all("div", class_="field-items")
         labels = souph.find_all("div", class_="field-label")
-    elif namey.text.strip() != "Sorry, this course is not in the current Calendar." or \
-            namey.text.strip() != "Sorry, this course has been retired and is no longer offered.":
-        out.append(namey.text.strip())
+    elif namey != "Sorry, this course is not in the current Calendar." and \
+            namey != "Sorry, this course has been retired and is no longer offered.":
+        out.append(namey)
         link = urly
         info = soupy.find_all("div", class_="field-items")
         labels = soupy.find_all("div", class_="field-label")
     else:
-        info = []
-        labels = []
         return []
 
     text_info = []
@@ -91,15 +91,10 @@ def scrape(course):
 
 def course_info(course):
     if scrape(course) == []:
-        return 'Course not found'
+        return ['Course not found']
     elif len(scrape(course)) == 1:
-        return scrape(course)[0]
-    out = ''
-    read = scrape(course)
-    for x in range(4):
-        out += read[x] + '\n\n'
-    out += read[4]
-    return out
+        return [scrape(course)[0]]
+    return scrape(course)
 
 
 def course_name(course):
@@ -107,7 +102,7 @@ def course_name(course):
         return 'Course not found'
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
-    return scrape(course)[0]
+    return [scrape(course)[0]]
 
 
 def course_descrip(course):
@@ -115,7 +110,7 @@ def course_descrip(course):
         return 'Course not found'
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
-    return scrape(course)[1]
+    return [scrape(course)[1]]
 
 
 def course_prereq(course):
@@ -123,7 +118,7 @@ def course_prereq(course):
         return 'Course not found'
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
-    return scrape(course)[2]
+    return [scrape(course)[2]]
 
 
 def course_exclu(course):
@@ -131,7 +126,7 @@ def course_exclu(course):
         return 'Course not found'
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
-    return scrape(course)[3]
+    return [scrape(course)[3]]
 
 
 def course_breadth(course):
@@ -139,7 +134,7 @@ def course_breadth(course):
         return 'Course not found'
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
-    return scrape(course)[4]
+    return [scrape(course)[4]]
 
 
 def course_link(course):
@@ -147,4 +142,7 @@ def course_link(course):
         return 'Course not found'
     elif len(scrape(course)) == 1:
         return scrape(course)[0]
-    return scrape(course)[5]
+    return [scrape(course)[5]]
+
+
+print(scrape('mat137'))
