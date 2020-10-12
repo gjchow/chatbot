@@ -5,7 +5,7 @@ import json
 import random
 import pickle
 import numpy as np
-import scraper
+import information
 import re
 
 lemmatizer = WordNetLemmatizer()
@@ -73,17 +73,17 @@ def get_response(ints, intents_json, sentence):
             else:
                 course = get_course(sentence)
                 if tag == 'search':
-                    result = scraper.course_info(course)
+                    result = information.course_info(course)
                 elif tag == 'prereq':
-                    result = scraper.course_prereq(course)
+                    result = information.course_prereq(course)
                 elif tag == 'breadth':
-                    result = scraper.course_breadth(course)
+                    result = information.course_breadth(course)
                 elif tag == 'description':
-                    result = scraper.course_descrip(course)
+                    result = information.course_descrip(course)
                 elif tag == 'exclusion':
-                    result = scraper.course_exclu(course)
+                    result = information.course_exclu(course)
                 elif tag == 'link':
-                    result = scraper.course_link(course)
+                    result = information.course_link(course)
             return result
 
 
@@ -102,7 +102,6 @@ def get_course(sentence):
             if is_utsc:
                 return word
     return ''
-
 
 # takes in the message and outputs a response after predicting intent
 def chatbot_response(msg):
