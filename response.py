@@ -12,7 +12,7 @@ lemmatizer = WordNetLemmatizer()
 
 model = load_model('training_info/chatbot_model.h5')
 
-ERROR_THRESHOLD = 0.2
+ERROR_THRESHOLD = 0.25
 # open things to be read
 intents = json.loads(open('intents.json').read())
 words_ = pickle.load(open('training_info/words.pkl', 'rb'))
