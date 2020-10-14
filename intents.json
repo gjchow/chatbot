@@ -27,8 +27,7 @@
         {"tag": "search",
          "patterns": ["csc100", "what is csc100", "course csc100", "which course is csc100", "what is mat100", "what is sta100",
          "csc200", "what is csc200", "course csc200", "which course is csc200", "what is mat200", "what is sta200",
-         "csc300", "what is csc300", "course csc300", "which course is csc300", "what is mat300", "what is sta300",
-         "csc400", "what is csc400", "course csc400", "which course is csc400", "what is mat400", "what is sta400"],
+         "csc300", "what is csc300", "course csc300", "which course is csc300", "what is mat300", "what is sta300"],
          "responses": ["Searching for something"],
          "context_set": ""
         },
