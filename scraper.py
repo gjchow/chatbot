@@ -59,7 +59,7 @@ def scrape(course):
     out.append(description)
     if "Prerequisite:" in text_labels:
         prereq_i = text_labels.index("Prerequisite:")
-        prereq = text_labels[prereq_i] + "\n" + text_info[prereq_i + 1].strip(u'\u200b')
+        prereq = text_labels[prereq_i] + "\n" + text_info[prereq_i + 1]
         out.append(prereq)
     else:
         out.append(None)

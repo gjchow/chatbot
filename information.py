@@ -38,7 +38,7 @@ def course_prereq(course):
     elif len(info) == 1:
         return info
     elif info[2] is None:
-        return ['Prerequisites: None']
+        return ['Prerequisites:', None]
     return [info[2]]
 
 
@@ -48,6 +48,8 @@ def course_exclu(course):
         return ['Course not found']
     elif len(info) == 1:
         return info
+    elif info[3] is None:
+        return ['Exclusion:', None]
     return [info[3]]
 
 
@@ -57,6 +59,8 @@ def course_breadth(course):
         return ['Course not found']
     elif len(info) == 1:
         return info
+    elif info[2] is None:
+        return ['Breadth Requirements:', None]
     return [info[4]]
 
 
@@ -82,7 +86,7 @@ def _needed_in_check(course: str, code: str, letter: str, n: int, show_details=T
         if show_details:
             print(to_check)
         prereq = course_prereq(to_check)
-        if prereq != 'Course not found' and prereq != 'Not a valid course' \
+        if prereq[0] != 'Course not found' and prereq[0] != 'Not a valid course' \
                 and prereq != 'Prerequisites: None':
             if course in prereq[0]:
                 out.append(to_check)
@@ -144,3 +148,4 @@ def needed_in(course: str, code: str, show_details=True):
             return [f'No courses starting with {code} need {course}']
         else:
             return [f'Courses starting with {code} needing {course}:'] + out
+
