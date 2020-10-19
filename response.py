@@ -84,23 +84,33 @@ def get_response(ints, intents_json, sentence):
                     result = information.course_exclu(course)
                 elif tag == 'link':
                     result = information.course_link(course)
+                elif tag == 'need':
+                    code = get_code(sentence)
+                    result = information.needed_in(course, code, False)
             return result
 
 
 def get_course(sentence):
     words = list(sentence.split())
-    is_utsg = False
-    is_utsc = False
     utsg = re.compile(r'^\w{3}\d{3}$')
     utsc = re.compile(r'^\w{3}[A-Da-d]\d{2}$')
     for word in words:
-        if not is_utsg and not is_utsc:
-            is_utsg = re.match(utsg, word)
-            if is_utsg:
-                return word
-            is_utsc = re.match(utsc, word)
-            if is_utsc:
-                return word
+        is_utsg = re.match(utsg, word)
+        is_utsc = re.match(utsc, word)
+        if is_utsg:
+            return word
+        if is_utsc:
+            return word
+    return ''
+
+
+def get_code(sentence):
+    words = list(sentence.split())
+    code = re.compile(r'^\w{3}$')
+    for word in words:
+        is_code = re.match(code, word)
+        if is_code:
+            return word
     return ''
 
 # takes in the message and outputs a response after predicting intent

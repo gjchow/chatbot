@@ -87,7 +87,7 @@ def _needed_in_check(course: str, code: str, letter: str, n: int, show_details=T
             print(to_check)
         prereq = course_prereq(to_check)
         if prereq[0] != 'Course not found' and prereq[0] != 'Not a valid course' \
-                and prereq != 'Prerequisites: None':
+                and None not in prereq:
             if course in prereq[0]:
                 out.append(to_check)
             check = True

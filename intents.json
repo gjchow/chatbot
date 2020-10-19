@@ -70,6 +70,14 @@
          "link me csc400", "csc400 link", "csc400 website", "more info on csc400"],
          "responses": ["Here is the link"],
          "context_set": ""
+        },
+        {"tag": "need",
+         "patterns": ["what csc courses need csc148", "csc148 needed in csc courses", "what sta courses need sta130", "sta130 needed in sta courses",
+         "link me csc200", "csc200 link", "csc200 website", "more info on csc200",
+         "link me csc300", "csc300 link", "csc300 website", "more info on csc300",
+         "link me csc400", "csc400 link", "csc400 website", "more info on csc400"],
+         "responses": ["Here is the link"],
+         "context_set": ""
         }
 ]
 }
