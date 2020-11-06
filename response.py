@@ -7,6 +7,7 @@ import pickle
 import numpy as np
 import information
 import re
+from typing import List
 
 lemmatizer = WordNetLemmatizer()
 
@@ -20,14 +21,14 @@ classes = pickle.load(open('training_info/classes.pkl', 'rb'))
 
 
 # lemmatize and clean up the words in a sentence
-def clean_up_sentence(sentence):
+def clean_up_sentence(sentence: str):
     sentence_words = nltk.word_tokenize(sentence)
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     return sentence_words
 
 
 # creates a bag of words for the cleaned up sentences
-def bow(sentence, words, show_details=True):
+def bow(sentence: str, words: List[str], show_details=True):
     sentence_words = clean_up_sentence(sentence)
     bag = [0]*len(words)
     for s in sentence_words:
@@ -40,7 +41,7 @@ def bow(sentence, words, show_details=True):
 
 
 # shows the intents and the likelihood
-def predict_class(sentence, model_, show_details=True):
+def predict_class(sentence: str, model_: model, show_details=True):
     p = bow(sentence, words_, show_details=False)
     res = model_.predict(np.array([p]))[0]
     results = []
@@ -61,7 +62,7 @@ def predict_class(sentence, model_, show_details=True):
 
 # outputs the response from the intent with the highest probability
 # change this to get different responses depending on tag
-def get_response(ints, intents_json, sentence):
+def get_response(ints, intents_json, sentence: str) -> List[str]:
     result = ''
     text_response = ['greeting', 'goodbye', 'help', 'thanks', 'unknown']
     tag = ints[0]['intent']
@@ -90,7 +91,7 @@ def get_response(ints, intents_json, sentence):
             return result
 
 
-def get_course(sentence):
+def get_course(sentence: str):
     words = list(sentence.split())
     utsg = re.compile(r'^\w{3}\d{3}$')
     utsc = re.compile(r'^\w{3}[A-Da-d]\d{2}$')
@@ -104,7 +105,7 @@ def get_course(sentence):
     return ''
 
 
-def get_code(sentence):
+def get_code(sentence: str):
     words = list(sentence.split())
     code = re.compile(r'^\w{3}$')
     for word in words:

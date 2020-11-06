@@ -2,9 +2,10 @@ import time
 from concurrent.futures.thread import ThreadPoolExecutor
 from scraper import scrape
 import re
+from typing import List
 
 
-def course_info(course):
+def course_info(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -13,7 +14,7 @@ def course_info(course):
     return list(filter(None, info))
 
 
-def course_name(course):
+def course_name(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -22,7 +23,7 @@ def course_name(course):
     return [info[0]]
 
 
-def course_descrip(course):
+def course_descrip(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -31,7 +32,7 @@ def course_descrip(course):
     return [info[1]]
 
 
-def course_prereq(course):
+def course_prereq(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -42,7 +43,7 @@ def course_prereq(course):
     return [info[2]]
 
 
-def course_exclu(course):
+def course_exclu(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -53,7 +54,7 @@ def course_exclu(course):
     return [info[3]]
 
 
-def course_breadth(course):
+def course_breadth(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -64,7 +65,7 @@ def course_breadth(course):
     return [info[4]]
 
 
-def course_link(course):
+def course_link(course: str) -> List[str]:
     info = scrape(course)
     if info == []:
         return ['Course not found']
@@ -73,7 +74,7 @@ def course_link(course):
     return [info[5]]
 
 
-def _needed_in_check(course: str, code: str, letter: str, n: int, show_details=True):
+def _needed_in_check(course: str, code: str, letter: str, n: int, show_details=True) -> List[str]:
     course = course.upper()
     code = code.upper()
     out = []
@@ -95,7 +96,7 @@ def _needed_in_check(course: str, code: str, letter: str, n: int, show_details=T
     return out
 
 
-def needed_in(course: str, code: str, show_details=True):
+def needed_in(course: str, code: str, show_details=True) -> List[str]:
     course = course.upper()
     code = code.upper()
     valid = re.compile(r'^[a-zA-Z]{3}$')

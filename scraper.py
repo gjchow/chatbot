@@ -1,9 +1,9 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+from typing import List
 
-
-def scrape(course):
+def scrape(course: str) -> List[str]:
     out = []
     course = course.lower()
     utsg = re.compile(r'^\w{3}[1-4]\d{2}$')
