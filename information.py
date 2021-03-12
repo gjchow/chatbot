@@ -149,4 +149,69 @@ def needed_in(course: str, code: str, show_details=True) -> List[str]:
             return [f'No courses starting with {code} need {course}']
         else:
             return [f'Courses starting with {code} needing {course}:'] + out
+       
+    
+def _split_prereq(course: str):
+    prereqs = course_prereq(course)
+    if prereqs != 'Course not found' and prereqs != 'Not a valid course' \
+            and prereqs != 'Prerequisites: None':
+        prereqs = prereqs[0].replace(u'\u200b', '')
+        prereqs = prereqs.replace('Prerequisite:\n', '')
+        prereqs = prereqs.split(",")
+        for i in range(len(prereqs)):
+            brackets = prereqs[i].count('(') - prereqs[i].count(')')
+            if brackets != 0:
+                prereqs[i+1] = ','.join(prereqs[i:i+2])
+                prereqs[i] = ''
+        prereqs = [item for item in prereqs if item != '']
+        for i in range(len(prereqs)):
+            prereqs[i] = prereqs[i].split('/')
+        for i in range(len(prereqs)):
+            for j in range(len(prereqs[i])):
+                prereqs[i][j] = prereqs[i][j].split(',')
+        return prereqs
+    else:
+        return None
+
+
+def _check_group(taken, prereqs, course):
+    ut = re.compile(r'(\w{3}[1-4]\d{2})|\w{3}[A-Da-d]\d{2}')
+    for req in prereqs:
+        check = []
+        for group in req:
+            group = group.lower()
+            thing = re.search(ut, group)
+            if thing.group(0) in taken:
+                check.append(True)
+            else:
+                check.append(False)
+        if all(check):
+            return True
+    return False
+
+
+def can_take(taken: List[str], course: str):
+    taken = [x.lower() for x in taken]
+    prereqs = _split_prereq(course)
+    if prereqs is None:
+        return "No prerequisites found"
+    else:
+        check = []
+        for req in prereqs:
+            check.append(_check_group(taken, req, course))
+        if all(check):
+            return "Fulfilled all requirements"
+        else:
+            out = "Missing:\n"
+            for i in range(len(prereqs)):
+                if not check[i]:
+                    for j in range(len(prereqs[i])):
+                        if len(prereqs[i][j]) > 1:
+                            prereqs[i][j] = [','.join(prereqs[i][j])]
+                        out += prereqs[i][j][0]
+                        if j == len(prereqs[i]) - 1:
+                            out += '\n'
+                        else:
+                            out += '/'
+            return out
 
